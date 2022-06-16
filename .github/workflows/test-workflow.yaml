@@ -21,7 +21,7 @@ jobs:
         run: echo "${{ steps.setup_packer.outputs.packer-version }}"
 
       - name: Run packer init
-        run: packer init templates/test.pkr.hcl
+        run: packer init templates/test/test.pkr.hcl
 
 #      - name: Run packer build
 #        run: packer build example.pkr.hcl
