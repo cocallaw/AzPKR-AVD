@@ -1,0 +1,27 @@
+name: Packer Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup_packer:
+    runs-on: ubuntu-latest
+    name: Build Packer image
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Packer
+        uses: sudomateo/setup-packer@v1
+        id: setup_packer
+        with:
+          packer-version: 'latest'
+
+      - name: Print packer-version output
+        run: echo "${{ steps.setup_packer.outputs.packer-version }}"
+
+      - name: Run packer init
+        run: packer init templates/test.pkr.hcl
+
+#      - name: Run packer build
+#        run: packer build example.pkr.hcl
