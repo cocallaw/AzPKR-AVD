@@ -169,7 +169,7 @@ build {
     update_limit    = 25
   }
 
-  1 provisioner "windows-restart" {
+  provisioner "windows-restart" {
     restart_check_command = "powershell -command \"&amp; {Write-Output 'Machine restarted.'}\""
   }
 
