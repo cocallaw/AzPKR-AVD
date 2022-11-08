@@ -163,19 +163,19 @@ source "azure-arm" "avdvm" {
 build {
   sources = ["source.azure-arm.avdvm"]
     
-  provisioner "windows-update" {
-    filters         = ["exclude:$_.Title -like '*Preview*'", "include:$true"]
-    search_criteria = "IsInstalled=0"
-    update_limit    = 25
-  }
-
-  provisioner "windows-restart" {
-    restart_check_command = "powershell -command \"&amp; {Write-Output 'Machine restarted.'}\""
-  }
-
-  #provisioner "powershell" {
-  #  inline = ["$ErrorActionPreference='Stop'", "Import-Module -Name Smbshare -Force -Scope Local", "$Usr= \"${var.StorageAccountInstallersName}\"", "New-SmbMapping -LocalPath Z: -RemotePath \"${var.StorageAccountInstallersPath}\" -Username \"$Usr\" -Password \"${var.StorageAccountInstallersKey}\"", "Write-Host \"'Z:' drive mapped\""]
+  #provisioner "windows-update" {
+  #  filters         = ["exclude:$_.Title -like '*Preview*'", "include:$true"]
+  #  search_criteria = "IsInstalled=0"
+  #  update_limit    = 25
   #}
+
+  #provisioner "windows-restart" {
+  #  restart_check_command = "powershell -command \"&amp; {Write-Output 'Machine restarted.'}\""
+  #}
+
+  provisioner "powershell" {
+    inline = ["$ErrorActionPreference='Stop'", "Import-Module -Name Smbshare -Force -Scope Local", "$Usr= \"${var.StorageAccountInstallersName}\"", "New-SmbMapping -LocalPath Z: -RemotePath \"${var.StorageAccountInstallersPath}\" -Username \"$Usr\" -Password \"${var.StorageAccountInstallersKey}\"", "Write-Host \"'Z:' drive mapped\""]
+  }
 
   provisioner "powershell" {
     inline = ["& $env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /quiet /quit", "while($true) { $imageState = Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\State | Select ImageState; if($imageState.ImageState -ne 'IMAGE_STATE_GENERALIZE_RESEAL_TO_OOBE') { Write-Output $imageState.ImageState; Start-Sleep -s 10  } else { break } }"]
