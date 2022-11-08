@@ -99,7 +99,7 @@ variable "TempResourceGroup" {
   default = ""
 }
 
-variable "ClientId" {
+variable "ClientID" {
   type    = string
   default = ""
 }
@@ -138,7 +138,7 @@ source "azure-arm" "avdvm" {
     dept = "WVD Labs"
     task = "Image deployment"
   }
-  client_id                         = "${var.ClientId}"
+  client_id                         = "${var.ClientID}"
   client_secret                     = "${var.ClientSecret}"
   communicator                      = "winrm"
   image_offer                       = "${var.ImageOffer}"
