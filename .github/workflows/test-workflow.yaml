@@ -23,5 +23,5 @@ jobs:
       - name: Run packer init
         run: packer init templates/test/test.pkr.hcl
 
-      #- name: Run packer build
-      #  run: packer build -var "ClientID=${{ secrets.CLIENT_ID }}" -var "ClientSecret=${{ secrets.CLIENT_SECRET }}" -var "TenantId=${{ secrets.TENANT_ID }}" -var "SubscriptionId=${{ secrets.SUB_ID }}" -var "StorageAccountInstallersKey=${{ secrets.STORAGE_KEY }}" templates/test/test.pkr.hcl
+      - name: Run packer build
+        run: packer build -var "ClientID=${{ secrets.CLIENT_ID }}" -var "ClientSecret=${{ secrets.CLIENT_SECRET }}" -var "TenantId=${{ secrets.TENANT_ID }}" -var "SubscriptionId=${{ secrets.SUB_ID }}" -var "StorageAccountInstallersKey=${{ secrets.STORAGE_KEY }}" templates/test/test.pkr.hcl
