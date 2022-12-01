@@ -163,15 +163,15 @@ source "azure-arm" "avdvm" {
 build {
   sources = ["source.azure-arm.avdvm"]
     
-  #provisioner "windows-update" {
-  #  filters         = ["exclude:$_.Title -like '*Preview*'", "include:$true"]
-  #  search_criteria = "IsInstalled=0"
-  #  update_limit    = 25
-  #}
+  provisioner "windows-update" {
+    filters         = ["exclude:$_.Title -like '*Preview*'", "include:$true"]
+    search_criteria = "IsInstalled=0"
+    update_limit    = 25
+  }
 
-  #provisioner "windows-restart" {
-  #  restart_check_command = "powershell -command \"&amp; {Write-Output 'Machine restarted.'}\""
-  #}
+  provisioner "windows-restart" {
+    restart_check_command = "powershell -command \"&amp; {Write-Output 'Machine restarted.'}\""
+    restart_timeout       = "15m"}
 
   provisioner "powershell" {
     inline = ["$ErrorActionPreference='Stop'", "Import-Module -Name Smbshare -Force -Scope Local", "$Usr= \"${var.StorageAccountInstallersName}\"", "New-SmbMapping -LocalPath Z: -RemotePath \"${var.StorageAccountInstallersPath}\" -Username \"$Usr\" -Password \"${var.StorageAccountInstallersKey}\"", "Write-Host \"'Z:' drive mapped\""]
